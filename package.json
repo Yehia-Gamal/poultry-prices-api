@@ -1,37 +1,14 @@
 {
   "name": "poultry-prices-api",
   "version": "1.0.0",
-  "description": "API to scrape poultry prices from elmorshdledwagn.com",
   "type": "module",
-  "main": "scraper-api.js",
   "scripts": {
-    "start": "node scraper-api.js",
-    "dev": "nodemon scraper-api.js"
+    "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Yehia-Gamal/poultry-prices-api.git"
-  },
-  "keywords": [
-    "poultry",
-    "prices",
-    "scraper",
-    "express",
-    "cheerio",
-    "api"
-  ],
-  "author": "Yehia Gamal",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Yehia-Gamal/poultry-prices-api/issues"
-  },
-  "homepage": "https://github.com/Yehia-Gamal/poultry-prices-api#readme",
   "dependencies": {
-    "cheerio": "^1.1.0",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
   }
 }
