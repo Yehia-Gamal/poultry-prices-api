@@ -1,14 +1,19 @@
-// بدّل import/export إلى require
-const express = require("express");
-const cors = require("cors");
-const fetch = require("node-fetch");
-const cheerio = require("cheerio");
+import express from "express";
+import cors from "cors";
+import * as cheerio from "cheerio";
 
 const app = express();
-app.use(cors());
+const PORT = process.env.PORT || 8080;
 
-const PORT = process.env.PORT || 3000;
+// افتح لأي دومين عشان تتجنب CORS
+app.use(cors({ origin: "*" }));
 
+// مسار تأكيد التشغيل
+app.get("/", (req, res) => {
+  res.send("✅ API is live and ready!");
+});
+
+// دالة جلب البيانات من المرشد
 async function getPoultryPrices() {
   const res = await fetch("https://elmorshdledwagn.com/prices/4");
   const html = await res.text();
@@ -16,13 +21,13 @@ async function getPoultryPrices() {
   const rows = [];
 
   $("table tbody tr").each((_, tr) => {
-    const tds = $(tr).find("td");
-    if (tds.length >= 4) {
+    const [c1, c2, c3, c4] = $(tr).find("td").toArray();
+    if (c4) {
       rows.push({
-        company: $(tds[0]).text().trim(),
-        white: $(tds[1]).text().trim(),
-        red: $(tds[2]).text().trim(),
-        change: $(tds[3]).text().trim(),
+        company: $(c1).text().trim(),
+        white: $(c2).text().trim(),
+        red: $(c3).text().trim(),
+        change: $(c4).text().trim(),
       });
     }
   });
@@ -30,14 +35,17 @@ async function getPoultryPrices() {
   return rows;
 }
 
+// المسار اللي يرجع JSON
 app.get("/api/poultry-prices", async (req, res) => {
   try {
     const data = await getPoultryPrices();
     res.json(data);
-  } catch (error) {
-    console.error("فشل في جلب البيانات:", error);
+  } catch (err) {
+    console.error("Fetch error:", err);
     res.status(500).json({ error: "فشل في جلب البيانات." });
   }
 });
 
-app.listen(PORT, () => console.log(`✅ API شغال على البورت ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`✅ API شغال على البورت ${PORT}`);
+});
