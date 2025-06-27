@@ -1,13 +1,17 @@
+// scraper-api.js
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch"; // لو بتستخدم Node < 18
 import * as cheerio from "cheerio";
+import fetch from "node-fetch";
 
 const app = express();
 app.use(cors());
-
 const PORT = process.env.PORT || 8080;
 
+// Root route to confirm API is running
+app.get("/", (req, res) => res.send("✅ API is live and ready!"));
+
+// Function to scrape poultry prices
 async function getPoultryPrices() {
   const res = await fetch("https://elmorshdledwagn.com/prices/4");
   const html = await res.text();
@@ -29,6 +33,7 @@ async function getPoultryPrices() {
   return rows;
 }
 
+// API endpoint to return poultry prices
 app.get("/api/poultry-prices", async (req, res) => {
   try {
     const data = await getPoultryPrices();
