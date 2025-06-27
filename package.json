@@ -2,7 +2,6 @@
   "name": "poultry-prices-api",
   "version": "1.0.0",
   "description": "API for scraping poultry prices from elmorshdledwagn.com",
-  "type": "module",
   "main": "scraper-api.js",
   "scripts": {
     "start": "node scraper-api.js"
