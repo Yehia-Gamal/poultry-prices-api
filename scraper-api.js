@@ -39,5 +39,5 @@ app.get("/api/poultry-prices", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ API شغال على http://localhost:${PORT}`);
+  console.log(`✅ API شغال على البورت ${PORT}`);
 });
